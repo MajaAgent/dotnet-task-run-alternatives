@@ -1,0 +1,23 @@
+name: build-and-run
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build
+        run: dotnet build -c Release
+
+      - name: Uruchom wszystkie 20 przykładów
+        run: dotnet run -c Release --project src/TaskRunAlternatives --no-build
